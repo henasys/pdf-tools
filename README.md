@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# PDF Tools
 
-## Getting Started
+PDF 파일을 쉽게 다룰 수 있는 웹 기반 도구 모음입니다. Next.js와 pdf-lib를 활용하여 만들어진 프로젝트입니다.
 
-First, run the development server:
+## 기능
+
+- PDF 파일 병합
+- PDF 페이지 추출
+
+## 시작하기
+
+먼저 개발 서버를 실행하세요:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+브라우저에서 [http://localhost:3000](http://localhost:3000)을 열어 결과를 확인할 수 있습니다.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## 기술 스택
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+- [Next.js 15.2.2](https://nextjs.org) - React 프레임워크
+- [React 19](https://react.dev) - UI 라이브러리
+- [pdf-lib](https://pdf-lib.js.org) - PDF 조작 라이브러리
+- [TailwindCSS](https://tailwindcss.com) - 스타일링
+- TypeScript - 타입 안정성
 
-## Learn More
+## 개발 환경 설정
 
-To learn more about Next.js, take a look at the following resources:
+1. 저장소 클론:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+```bash
+git clone <repository-url>
+cd pdf-tools
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. 의존성 설치:
 
-## Deploy on Vercel
+```bash
+npm install
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. 개발 서버 실행:
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+```bash
+npm run dev
+```
+
+## 빌드 및 배포
+
+프로덕션 빌드를 생성하려면:
+
+```bash
+npm run build
+```
+
+빌드된 애플리케이션을 실행하려면:
+
+```bash
+npm run start
+```
+
+## 라이선스
+
+MIT License
