@@ -89,7 +89,7 @@ export default function PdfMerger() {
           className={`flex flex-col items-center p-6 border-2 border-dashed rounded-lg transition-colors ${
             isDragging
               ? "border-blue-500 bg-blue-50"
-              : "border-gray-300 bg-gray-50"
+              : "border-gray-300 hover:border-blue-400"
           }`}
           onDragOver={handleDragOver}
           onDragLeave={handleDragLeave}
