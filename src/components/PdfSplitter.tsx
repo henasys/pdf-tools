@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, ChangeEvent } from "react";
+import { useState, useRef, ChangeEvent, DragEvent } from "react";
 import {
   parsePageRange,
   getPdfPageCount,
@@ -15,22 +15,55 @@ export default function PdfSplitter() {
   const [loading, setLoading] = useState<boolean>(false);
   const [pageRange, setPageRange] = useState<string>("");
   const [currentPage, setCurrentPage] = useState(1);
+  const [isDragging, setIsDragging] = useState(false);
   const ITEMS_PER_PAGE = 25; // 5x5 grid
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files[0]) {
       const file = e.target.files[0];
-      setPdfFile(file);
+      await processFile(file);
+    }
+  };
 
-      try {
-        const pages = await getPdfPageCount(file);
-        setPageCount(pages);
-        setSelectedPages([]);
-      } catch (error) {
-        console.error(error);
-        // Handle error appropriately
-      }
+  const processFile = async (file: File) => {
+    if (!file.type.includes("pdf")) {
+      alert("PDF 파일만 업로드 가능합니다.");
+      return;
+    }
+
+    setPdfFile(file);
+    try {
+      const pages = await getPdfPageCount(file);
+      setPageCount(pages);
+      setSelectedPages([]);
+      setPageRange("");
+    } catch (error) {
+      console.error(error);
+      alert("PDF 파일을 처리하는 중 오류가 발생했습니다.");
+    }
+  };
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const files = Array.from(e.dataTransfer.files);
+    if (files.length > 0) {
+      await processFile(files[0]); // Only process the first file
     }
   };
 
@@ -81,7 +114,16 @@ export default function PdfSplitter() {
     <div className="max-w-2xl mx-auto p-6">
       <h1 className="text-2xl font-bold text-center mb-8">PDF 페이지 추출</h1>
       <div className="space-y-6">
-        <div className="flex flex-col items-center p-6 border-2 border-dashed border-gray-300 rounded-lg">
+        <div
+          className={`flex flex-col items-center p-6 border-2 border-dashed rounded-lg transition-colors ${
+            isDragging
+              ? "border-blue-500 bg-blue-50"
+              : "border-gray-300 hover:border-blue-400"
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <input
             type="file"
             accept=".pdf"
@@ -89,12 +131,17 @@ export default function PdfSplitter() {
             className="hidden"
             ref={fileInputRef}
           />
-          <button
-            onClick={() => fileInputRef.current?.click()}
-            className="px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-600 transition-colors"
-          >
-            PDF 파일 선택
-          </button>
+          <div className="text-center">
+            <button
+              onClick={() => fileInputRef.current?.click()}
+              className="px-4 py-2 bg-blue-500 text-white rounded-lg cursor-pointer hover:bg-blue-600 transition-colors"
+            >
+              PDF 파일 선택
+            </button>
+            <p className="mt-2 text-sm text-gray-500">
+              또는 PDF 파일을 여기에 드래그하세요
+            </p>
+          </div>
           {pdfFile && (
             <p className="mt-2 text-sm text-gray-600">
               선택된 파일: {pdfFile.name}
