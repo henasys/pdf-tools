@@ -7,6 +7,7 @@ export default function PdfMerger() {
   const [files, setFiles] = useState<File[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -16,9 +17,40 @@ export default function PdfMerger() {
       const pdfFiles = fileList.filter(
         (file) => file.type === "application/pdf"
       );
-      setFiles(pdfFiles);
+      setFiles((prevFiles) => [...prevFiles, ...pdfFiles]);
       setError(null);
     }
+  };
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const droppedFiles = Array.from(e.dataTransfer.files);
+    const pdfFiles = droppedFiles.filter(
+      (file) => file.type === "application/pdf"
+    );
+
+    if (pdfFiles.length === 0) {
+      setError("PDF 파일만 업로드 가능합니다.");
+      return;
+    }
+
+    setFiles((prevFiles) => [...prevFiles, ...pdfFiles]);
+    setError(null);
   };
 
   const handleMerge = async () => {
@@ -53,7 +85,16 @@ export default function PdfMerger() {
       <h1 className="text-2xl font-bold text-center mb-8">PDF 파일 병합</h1>
 
       <div className="space-y-4">
-        <div className="flex flex-col items-center p-6 border-2 border-dashed border-gray-300 rounded-lg bg-gray-50">
+        <div
+          className={`flex flex-col items-center p-6 border-2 border-dashed rounded-lg transition-colors ${
+            isDragging
+              ? "border-blue-500 bg-blue-50"
+              : "border-gray-300 bg-gray-50"
+          }`}
+          onDragOver={handleDragOver}
+          onDragLeave={handleDragLeave}
+          onDrop={handleDrop}
+        >
           <input
             type="file"
             ref={fileInputRef}
