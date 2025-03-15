@@ -139,7 +139,7 @@ export default function PdfSplitter() {
               PDF 파일 선택
             </button>
             <p className="mt-2 text-sm text-gray-500">
-              또는 PDF 파일을 여기에 드래그하세요
+              또는 파일을 여기에 드래그하여 놓으세요
             </p>
           </div>
           {pdfFile && (
