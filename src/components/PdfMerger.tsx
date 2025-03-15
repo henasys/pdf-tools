@@ -111,7 +111,7 @@ export default function PdfMerger() {
             PDF 파일 선택
           </label>
           <p className="mt-2 text-sm text-gray-500">
-            또는 파일을 여기에 드래그하여 놓으세요
+            또는 파일을 여기에 끌어서 놓으세요
           </p>
         </div>
 
