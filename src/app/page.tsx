@@ -54,7 +54,7 @@ export default function Home() {
             </button>
             <div
               ref={featuresRef}
-              className={`grid grid-cols-1 md:grid-cols-2 gap-4 transition-all duration-300 ${
+              className={`grid grid-cols-1 md:grid-cols-3 gap-4 transition-all duration-300 ${
                 isFeaturesExpanded
                   ? "opacity-100 max-h-[500px]"
                   : "opacity-0 max-h-0 overflow-hidden"
@@ -79,6 +79,13 @@ export default function Home() {
                   한 페이지 짜리 HTML + Javascript로 만들어진 웹 사이트라서 무료
                   인터넷 서버를 사용합니다. 서버 비용이 전혀 들지 않습니다. 딱히
                   광고를 넣을 이유가 없어서, 깔끔한 화면을 유지하려 합니다.
+                </p>
+              </div>
+              <div className="p-3 bg-gray-50 rounded-lg">
+                <h3 className="font-semibold text-base mb-1">오픈 소스 코드</h3>
+                <p className="text-sm text-gray-600">
+                  오픈 소스로 만들어졌습니다. 페이지 하단 링크를 따라가시면 소스
+                  코드를 볼 수 있습니다.
                 </p>
               </div>
             </div>
