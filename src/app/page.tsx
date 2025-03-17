@@ -82,7 +82,9 @@ export default function Home() {
                 </p>
               </div>
               <div className="p-3 bg-gray-50 rounded-lg">
-                <h3 className="font-semibold text-base mb-1">오픈 소스 코드</h3>
+                <h3 className="font-semibold text-base mb-1">
+                  오픈 소스 코드, NO 시크릿
+                </h3>
                 <p className="text-sm text-gray-600">
                   오픈 소스로 만들어졌습니다. 페이지 하단 링크를 따라가시면 소스
                   코드를 볼 수 있습니다.
